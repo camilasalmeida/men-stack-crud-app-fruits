@@ -22,28 +22,17 @@ mongoose.connection.on("connected", () => {
 //**----------------------3. Import the model into server.js ----------------------**
 const Fruit = require("./models/fruit.js");    //path
 
-
-
 //**----------------------1. Build the route using EJS templates-------------------**
 //GET
 app.get('/', async (req, res) => {
     res.render('index.ejs');
 });
 
+//**----------------------4. Create the NEW Route for Creating a new fruit ----------------------**
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.get('/fruits/new', (req, res) => {
+    res.render('fruits/new.ejs');
+});
 
 
 

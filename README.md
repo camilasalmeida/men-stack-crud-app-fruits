@@ -52,8 +52,15 @@ mongoose.connection.on("connected", () => {
  You should name models and model files singularly. 🟠models/fruits.js
 3. Import the model into server.js, `const Fruit = require("./models/fruit.js");`  🟢server.js
 
+**⭐️-------------------BUILD THE NEW FRUIT PAGE (DISPLAY A FORM) ---------------⭐️**
 
-
+1. Define the route and test it: `app.get("/fruits/new", (req, res) => {
+  res.send("This route sends the user a form page!");
+});` 🟢server.js
+2. Create the new template: `mkdir views/fruits + touch views/fruits/new.ejs`.
+3. Add some basic content to our `new.ejs` template. 🟠models/fruits/new.ejs
+4. Update the route in server.js: Instead of res.send, let’s render the new.ejs. `res.render("fruits/new.ejs");` 🟢server.js 
+5. Create the form. This form will allow users to input data for creating a new fruit. 🟠models/fruits/new.ejs
 
 
 **⭐️--------------------------NOTES 📝-------------------------⭐️**
@@ -64,7 +71,12 @@ mongoose.connection.on("connected", () => {
 - We need to stabilish a connection to a database. This connection will enable our application to store and retrieve data as we develop more features. 
 We will use MongoDB Atlas, a cloud database service, along with Mongoose, an Object Data Modeling (ODM) library for MongoDB and Node.js.
 
--Creating a Model: As we progress with our application, the next essential step is to create a schema and model for our fruits. This process will define how our fruit data is structured and stored in the database. By establishing a clear schema, we ensure consistency and reliability in the data we handle. Additionally, the model created from this schema will serve as the main interface for our application to interact with the MongoDB database, allowing us to perform CRUD operations on fruit data.
+- Creating a Model: As we progress with our application, the next essential step is to create a schema and model for our fruits. This process will define how our fruit data is structured and stored in the database. By establishing a clear schema, we ensure consistency and reliability in the data we handle. Additionally, the model created from this schema will serve as the main interface for our application to interact with the MongoDB database, allowing us to perform CRUD operations on fruit data.
+
+- The NEW Route: Creating a new fruit in our application involves two distinct steps, each handled by separate routes. The first step is presenting the user with a form to enter fruit data. This is the responsibility of the “new” route, which we’ll build in this section. Its sole purpose is to display a form for data entry.
+Once the user fills out the form and submits it, the data is sent to another route, which we’ll construct in the next section. This second route is dedicated to processing the submitted data and inserting it into the database.
+
+Organizing our templates into model-specific sub-folders is a good practice, especially for larger applications with multiple models.
 
 
 
