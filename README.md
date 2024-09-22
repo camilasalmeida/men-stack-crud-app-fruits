@@ -62,18 +62,42 @@ mongoose.connection.on("connected", () => {
 4. Update the route in server.js: Instead of res.send, let’s render the new.ejs. `res.render("fruits/new.ejs");` 🟢server.js 
 5. Create the form. This form will allow users to input data for creating a new fruit. 🟠models/fruits/new.ejs
 
-**⭐️-------------------CREATE A FRUIT---------------⭐️**
+**⭐️-------------------CREATE A FRUIT - CRUD operation, CREATE! ---------------⭐️**
 1. Right after importing the Fruit model, create a route to handle form submissions for creating new fruits in our database. `app.use(express.urlencoded({ extended: false }));` 🟢server.js
 2. Define and test the route. `app.post("/fruits", async (req, res) => {
   console.log(req.body);
   res.redirect("/fruits/new");
 }); ` 🟢server.js
-3. Add the logic: `if (req.body.isReadyToEat === "on")` 🟢server.js
-4.
+3. Add the logic to the checkbox: `if (req.body.isReadyToEat === "on")` 🟢server.js
+4. Verify that our data is safe by navigating to the MongoDB Atlas dashboard.
 
+**⭐️-------------------BUILD THE FRUITS INDEX PAGE - CRUD funcionality, READ! ---------------⭐️**
+This route will retrieve and DISPLAY all the fruits currently stored in our database.
 
-
-
+1. Define and test the route. `app.get("/fruits", (req, res) => {
+  res.send("Welcome to the index page!");
+});`  🟢server.js
+2. Retrieve data from the database. Use Mongoose’s .find() method, When called without any arguments, .find() retrieves all documents within a collection, returning them as an array.
+```Javascript
+app.get("/fruits", async (req, res) => {
+  const allFruits = await Fruit.find();
+  res.send("Welcome to the index page!");
+}); 
+```
+3. Log the variable `allFruits` to the console, to be sure we have the data we're looking for. Nagivate to localhost. 🟢server.js
+4. Update the route, display this data to the user. Instead of .send(), we will use .render() to respond with a dynamically generated HTML view. The .render() method takes two arguments: 
+    1. The first argument is a string specifying the path to the EJS template we wish to render: `‘fruits/index.ejs’`.
+    2. The second argument is an object containing the data we want to pass to the template. This data is provided as key/value pairs, where the key is the name we’ll use to reference the data in our EJS template.
+    `res.render("fruits/index.ejs", { fruits: allFruits });` 🟢server.js
+5. Create the index template inside of views. `touch views/fruits/index.ejs` 
+6. Add HTML boilerplate and content. 🟣views/fruits/index.js
+7. List our fruits in a simple, bulleted list format using an unordered list <ul>. Do this by looping over the fruits array and dynamically generating an <li> for each fruit’s name. 🟣views/fruits/index.js
+8. Refresh localhost.
+9. Update our create route. Instead of redirecting users back to the form after adding a new fruit, we can redirect them to the index page. 🟢server.js
+10. Adding links. Add a link on the homepage of our application that users can click to visit the index page: 
+    1. `<a href="/fruits">Browse Fruits</a>` . 🟣views/index.ejs
+    2. `<a href="/fruits/new">Add New Fruit</a>`  🟣views/fruits/index.ejs
+    3. `<a href="/fruits/">Back to Fruits</a> ` 🟣views/fruits/new.ejs
 
 **⭐️--------------------------NOTES 📝-------------------------⭐️**
 - The server.js file is typically the main entry point and configuration file for setting up an Express web server.
