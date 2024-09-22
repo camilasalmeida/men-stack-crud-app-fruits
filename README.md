@@ -62,6 +62,18 @@ mongoose.connection.on("connected", () => {
 4. Update the route in server.js: Instead of res.send, let’s render the new.ejs. `res.render("fruits/new.ejs");` 🟢server.js 
 5. Create the form. This form will allow users to input data for creating a new fruit. 🟠models/fruits/new.ejs
 
+**⭐️-------------------CREATE A FRUIT---------------⭐️**
+1. Right after importing the Fruit model, create a route to handle form submissions for creating new fruits in our database. `app.use(express.urlencoded({ extended: false }));` 🟢server.js
+2. Define and test the route. `app.post("/fruits", async (req, res) => {
+  console.log(req.body);
+  res.redirect("/fruits/new");
+}); ` 🟢server.js
+3. Add the logic: `if (req.body.isReadyToEat === "on")` 🟢server.js
+4.
+
+
+
+
 
 **⭐️--------------------------NOTES 📝-------------------------⭐️**
 - The server.js file is typically the main entry point and configuration file for setting up an Express web server.
@@ -77,6 +89,11 @@ We will use MongoDB Atlas, a cloud database service, along with Mongoose, an Obj
 Once the user fills out the form and submits it, the data is sent to another route, which we’ll construct in the next section. This second route is dedicated to processing the submitted data and inserting it into the database.
 
 Organizing our templates into model-specific sub-folders is a good practice, especially for larger applications with multiple models.
+
+- When a user submits the form on the /fruits/new page, the browser sends a request to our server with the form data. To access this data in Express, we need to use middleware. Specifically, we’ll use express.urlencoded. 
+
+- Middleware **express.urlencoded**: This middleware parses incoming request bodies, extracting form data and converting it into a JavaScript object. It then attaches this object to the `req.body` property of the request, making the form data easily accessible within our route handlers.
+
 
 
 

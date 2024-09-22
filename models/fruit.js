@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 //Inside of those parentheses we're making an object. That object is going to have our blueprint.
 const fruitSchema = new mongoose.Schema({        //making our Schema object. `fruitSchema` is our convention resource schema.
     name: String,
-    isReadToEat: Boolean,
+    isReadyToEat: Boolean,
 })
 
 //We need to compile it, register our model.

@@ -20,7 +20,14 @@ mongoose.connection.on("connected", () => {
 });
 
 //**----------------------3. Import the model into server.js ----------------------**
+
 const Fruit = require("./models/fruit.js");    //path
+
+
+//**----------------------5. Adding the Middleware ----------------------**
+
+app.use(express.urlencoded({ extended: false }));
+
 
 //**----------------------1. Build the route using EJS templates-------------------**
 //GET
@@ -34,6 +41,20 @@ app.get('/fruits/new', (req, res) => {
     res.render('fruits/new.ejs');
 });
 
+
+//**----------------------6. Define the route FRUITS- POST ----------------------**
+// POST /fruits: signifies the creation of new data.
+app.post("/fruits", async (req, res) => {
+    //console.log(req.body);
+    if (req.body.isReadyToEat === "on") {
+      req.body.isReadyToEat = true;
+    } else {
+      req.body.isReadyToEat = false;
+    }
+    await Fruit.create(req.body);
+    //console.log(req.body);
+    res.redirect("/fruits/new");
+  });
 
 
 app.listen(3000, () => {

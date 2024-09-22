@@ -10,14 +10,13 @@
 <body>
     <h1>Create a New Fruit!</h1>
     <form action="/fruits" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" maxlength="20" />
+        <label for="name">Name:</label>                                 <!-- what is this attribute for? For "name".-->
+        <input type="text" name="name" id="name" maxlength="20" />      <!-- name is just an attribute for that input. What are we calling this? This input is for our name data. Tip: match the name as it appears in the schema. -->
 
-        <label for="isReadToEat">Ready to Eat?</label>
-        <input type="checkbox" name="isReadToEat" id="isReadToEat" />
+        <label for="isReadyToEat">Ready to Eat?</label>
+        <input type="checkbox" name="isReadyToEat" id="isReadyToEat" />    <!-- for and id are connect, so just use the same name. -->
 
         <button type="submit">Add Fruit</button>
-
     </form>
 </body>
 </html>
