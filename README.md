@@ -99,6 +99,55 @@ app.get("/fruits", async (req, res) => {
     2. `<a href="/fruits/new">Add New Fruit</a>`  🟣views/fruits/index.ejs
     3. `<a href="/fruits/">Back to Fruits</a> ` 🟣views/fruits/new.ejs
 
+
+**⭐️-------------------BUILD THE FRUITS SHOW PAGE - CRUD operation, READ! ---------------⭐️**
+The show route is designed to display detailed information about a specific item, such as a specific `fruit` in our application. In keeping with RESTful routing conventions, the url for this route will be: :fruitId. 
+The `:fruitId` in the URL is a variable segment, known as a URL parameter. It allows our route to dynamically handle requests for different fruits by their unique IDs. So, whenever a user wants to view details about a particular fruit, they will navigate to a URL like /fruits/12345, where 12345 is the fruit’s ID.
+1. Transform the fruit names listed into clickable links. Wrap the `<%= fruit.name %>` with an <a> tag: `<li><a href="#"><%= fruit.name %></a></li>`.  🟣views/fruits/index.ejs
+2. Adding a dynamic href. Access their id's by using `fruit._id`: `<a href="/fruits/<%= fruit._id %>"> <%= fruit.name %> </a>`. 🟣views/fruits/index.ejs
+3. Go the browser and test a link by clicking in any fruit. It shows the fruit's id, but the route does not exist, we haven’t built it yet.
+4. Define and test the `show` route: 
+```Javascript
+app.get("/fruits/:fruitId", (req, res) => {
+  res.send(
+    `This route renders the show page for fruit id: ${req.params.fruitId}!`
+  );
+});
+``` 
+Add it below the fruits/new route! We need to ensure that any route with an /:id is placed after /new in our express applications. 🟢server.js
+5. Build the READ functionality. Use Mongoose’s `.findById()` method for fetching a specific fruit by its _id. This method is perfect for retrieving a single document based on its unique identifier. ` const foundFruit = await Fruit.findById(req.params.fruitId);`. Update the route:
+```Javascript
+app.get("/fruits/:fruitId", async (req, res) => {
+  const foundFruit = await Fruit.findById(req.params.fruitId);
+  res.send(`This route renders the show page for fruit id: ${req.params.fruitId}!`);
+});
+``` 
+6. Rendering the Fruit details. Update from res.send() to res.render() to display the show page template. Also pass the retrieved fruit data to the template: `res.render("fruits/show.ejs", { fruit: foundFruit });`. 🟢server.js
+7. Create the SHOW template: `touch views/fruits/show.ejs`. Add boilerplate and content. 🟣views/fruits/show.ejs
+8. Enhance our application to show detailed information about each fruit. Dynamically update our HTML template using the fruit data we’ve passed: `<title><%= fruit.name %></title>` and `<h1><%= fruit.name %></h1>`.
+Teste it! 🟣views/fruits/show.ejs
+9. Incorporate conditional rendering based on the fruit’s `isReadyToEat` property. This will display different messages depending on whether the fruit is ready to eat or not. Use EJS control flow to dynamically display a message about the fruit’s readiness. Insert an if/else statement: `<% if (fruit.isReadyToEat) { %>` ... 🟣views/fruits/show.ejs
+10. Link show page back to Fruits index. Navigate back to the index page: `<a href="/fruits/">Back to Fruits</a>`. 🟣views/fruits/show.ejs
+11. Test it! Done ✅
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 **⭐️--------------------------NOTES 📝-------------------------⭐️**
 - The server.js file is typically the main entry point and configuration file for setting up an Express web server.
 
@@ -118,6 +167,8 @@ Organizing our templates into model-specific sub-folders is a good practice, esp
 
 - Middleware **express.urlencoded**: This middleware parses incoming request bodies, extracting form data and converting it into a JavaScript object. It then attaches this object to the `req.body` property of the request, making the form data easily accessible within our route handlers.
 
-
-
+-  1. `req` is the request object that contains information about the HTTP request.
+   2.  `params` is an object within the request object that holds ***route*** parameters. These are the parts of the URL that are defined with a colon(:) in the route path.
+    3. Using fruitId: `req.params.fruitId` retrieves the value of fruitId from the URL. For example, if the URL is /fruits/12345, then req.params.fruitId will equal 12345.
+    This ID is then used in the `Fruit.findById(req.params.fruitId)` call to search for the specific fruit in the database.
 

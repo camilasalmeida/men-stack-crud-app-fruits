@@ -29,6 +29,7 @@ const Fruit = require("./models/fruit.js");    //path
 app.use(express.urlencoded({ extended: false }));
 
 
+
 //**----------------------1. Build the route using EJS templates-------------------**
 //GET
 app.get('/', async (req, res) => {
@@ -39,6 +40,13 @@ app.get('/', async (req, res) => {
 
 app.get('/fruits/new', (req, res) => {
     res.render('fruits/new.ejs');
+});
+
+//**----------------------8. Define the SHOW route ----------------------**
+//Rendering the Fruit details
+app.get('/fruits/:fruitId', async (req,res) => {
+    const foundFruit = await Fruit.findById(req.params.fruitId);            // `req.params.fruitId` captures the ID from the URL, and we use it to find the specific fruit.
+    res.render('fruits/show.ejs', { fruit: foundFruit });
 });
 
 
@@ -55,8 +63,6 @@ app.post("/fruits", async (req, res) => {
     //console.log(req.body);
     res.redirect("/fruits");                  // redirect to index fruits
   });
-
-  
 
 //**----------------------7. Build the Fruits Index Page ----------------------**
 //This route will retrieve and display all the fruits currently stored in our database.

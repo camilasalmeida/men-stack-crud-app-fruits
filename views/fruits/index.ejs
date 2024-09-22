@@ -14,8 +14,10 @@
     <a href="/fruits/new">Add New Fruit</a>
     <h1>All Fruits</h1>
     <ul>
-        <% fruits.forEach(fruit => { %>           <!-- loop over the fruits array and dynamically generate an <li> for each fruit’s name. -->
-            <li><a href="/fruits/<%= fruit._id%>"><%= fruit.name %> </a></li>            <!-- use <ul, <li> -->
+        <% fruits.forEach(fruit => { %>                                        <!-- loop over the fruits array and dynamically generate an <li> for each fruit’s name. -->
+            <li>                                                               <!-- Make each fruit name a clickable link. Use <ul, <li>.-->
+                <a href="/fruits/<%= fruit._id %>"> <%= fruit.name %> </a>     <!-- Adding a dynamic href: each fruit name is now a link. When clicked, it will take the user to the show page for that specific fruit, using its unique ID in the URL.-->
+            </li>                                   
         <% }); %>
     </ul>
 
