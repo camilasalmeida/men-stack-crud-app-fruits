@@ -1,10 +1,10 @@
-**⭐️--------------------------BUILD AND RUN EXPRESS-------------------------⭐️**
+### ** ----------------------------- **BUILD AND RUN EXPRESS** ---------------------------**
 1. Create a directory and cd into it, ` touch server.js + npm init + code . `
 2. Create a basic Express server, installing a express package `npm i express`. Packages added! ✅
 3. Built a Basic Structure of Express App (const express = require..., listen port... and etc.)
 4. Run the Server : `nodemon`.
 
-**⭐️--------------------------BUILD A LANDING PAGE-------------------------⭐️**
+### ** ----------------------------- **BUILD A LANDING PAGE** -----------------------------**
 1. Create a landing page using EJS templates. We need to install it: `npm i ejs
 `.
 2. Build the route. (app.get('/', ... etc)). 🟢server.js
@@ -12,7 +12,7 @@
 4. Add the boilerplate and content inside. 🟣views
 5. Modify the response in the server's route handler usind the `res.render()` method, instead of `res.send()`. So when the user visits the root `/`, they will see our homepage, change it to: `res.render('index.ejs');`. 🟢server.js
 
-**⭐️-------------------USE MONGOOSE TO CONNECT TO MONGODB ---------------⭐️**
+### ** ------------------- **USE MONGOOSE TO CONNECT TO MONGODB** -------------------**
 
 1. We need to install Mongoose and dotenv from NPM: `npm i mongoose dotenv`. Installed! ✅
 2. Create a .env file in your project’s root directory: `touch .env`. 
@@ -42,7 +42,7 @@ mongoose.connection.on("connected", () => {
 ```
 10. Start the app: `nodemon`.
 
-**⭐️-------------------BUILD THE FRUIT MODEL ---------------⭐️**
+### ** ------------------ **BUILD THE FRUIT MODEL** ---------------------**
 
 1. Create a Models Directory and a Fruit file: `mkdir models + touch models/fruit.js`
 2. Create a Schema and Model for Our Fruits:
@@ -52,7 +52,7 @@ mongoose.connection.on("connected", () => {
  You should name models and model files singularly. 🟠models/fruits.js
 3. Import the model into server.js, `const Fruit = require("./models/fruit.js");`  🟢server.js
 
-**⭐️-------------------BUILD THE NEW FRUIT PAGE (DISPLAY A FORM) ---------------⭐️**
+### ** -------- **BUILD THE NEW FRUIT PAGE (DISPLAY A FORM)** -----------**
 
 1. Define the route and test it: `app.get("/fruits/new", (req, res) => {
   res.send("This route sends the user a form page!");
@@ -62,7 +62,7 @@ mongoose.connection.on("connected", () => {
 4. Update the route in server.js: Instead of res.send, let’s render the new.ejs. `res.render("fruits/new.ejs");` 🟢server.js 
 5. Create the form. This form will allow users to input data for creating a new fruit. 🟠models/fruits/new.ejs
 
-**⭐️-------------------CREATE A FRUIT - CRUD operation, CREATE! ---------------⭐️**
+### ** ---------- **CREATE A FRUIT - CRUD operation, CREATE!** -----------**
 1. Right after importing the Fruit model, create a route to handle form submissions for creating new fruits in our database. `app.use(express.urlencoded({ extended: false }));` 🟢server.js
 2. Define and test the route. `app.post("/fruits", async (req, res) => {
   console.log(req.body);
@@ -71,7 +71,7 @@ mongoose.connection.on("connected", () => {
 3. Add the logic to the checkbox: `if (req.body.isReadyToEat === "on")` 🟢server.js
 4. Verify that our data is safe by navigating to the MongoDB Atlas dashboard.
 
-**⭐️-------------------BUILD THE FRUITS INDEX PAGE - CRUD funcionality, READ! ---------------⭐️**
+### ** ----- **BUILD THE FRUITS INDEX PAGE - CRUD funcionality, READ!** -----**
 This route will retrieve and DISPLAY all the fruits currently stored in our database.
 
 1. Define and test the route. `app.get("/fruits", (req, res) => {
@@ -99,8 +99,7 @@ app.get("/fruits", async (req, res) => {
     2. `<a href="/fruits/new">Add New Fruit</a>`  🟣views/fruits/index.ejs
     3. `<a href="/fruits/">Back to Fruits</a> ` 🟣views/fruits/new.ejs
 
-
-**⭐️-------------------BUILD THE FRUITS SHOW PAGE - CRUD operation, READ! ---------------⭐️**
+### ** ------- **BUILD THE FRUITS SHOW PAGE - CRUD operation, READ!** ---------**
 The show route is designed to display detailed information about a specific item, such as a specific `fruit` in our application. In keeping with RESTful routing conventions, the url for this route will be: :fruitId. 
 The `:fruitId` in the URL is a variable segment, known as a URL parameter. It allows our route to dynamically handle requests for different fruits by their unique IDs. So, whenever a user wants to view details about a particular fruit, they will navigate to a URL like /fruits/12345, where 12345 is the fruit’s ID.
 1. Transform the fruit names listed into clickable links. Wrap the `<%= fruit.name %>` with an <a> tag: `<li><a href="#"><%= fruit.name %></a></li>`.  🟣views/fruits/index.ejs
@@ -131,7 +130,7 @@ Teste it! 🟣views/fruits/show.ejs
 10. Link show page back to Fruits index. Navigate back to the index page: `<a href="/fruits/">Back to Fruits</a>`. 🟣views/fruits/show.ejs
 11. Test it! Done ✅
 
-**⭐️-------------------DELETE A FRUIT - CRUD operation - DELETE!---------------⭐️**
+### ** ------ **DELETE A FRUIT - CRUD operation - DELETE!** -------**
 1. Introduce two essential middleware components: method-override and morgan.
 Stop our server and install their node packages: `npm i method-override morgan.
 2. Require them at the top of our server.js. 🟢server.js
@@ -147,7 +146,7 @@ Stop our server and install their node packages: `npm i method-override morgan.
 6. Create delete funcionality. Use the Mongoose method findByIdAndDelete() to find the fruit by its ID and delete it: `await Fruit.findByIdAndDelete(req.params.fruitId);`. 🟢server.js
 7. Redirects the user back to the index page /fruits, where the deleted fruit will no longer be listed. 🟢server.js
 
-**⭐️-------------------BUILD THE EDIT ROUTE - CRUD operation - EDIT!---------------⭐️**
+### ** ------ **BUILD THE EDIT ROUTE - CRUD operation - EDIT!** -------**
 This is the only RESTful route that contains three segments /fruits/:fruitId/edit.
 1. Add a link on the show page and Update `show.ejs`. 🟣views/fruits/show.ejs
 ```Javascript
@@ -168,25 +167,12 @@ app.get("/fruits/:fruitId/edit", async (req, res) => {
 4. Edit fruit data. 🟣views/fruits/show.ejs
 5 . Prefill the form with the current data of the fruit being edited: `<input type="checkbox" name="isReadyToEat" <% if (fruit.isReadyToEat) { %>checked<% } %> >` 🟣views/fruits/show.ejs
 
-**⭐️-------------------UPDATE A FRUIT - CRUD operation - UPDATE!---------------⭐️**
+### ** ---- **UPDATE A FRUIT - CRUD operation - UPDATE!** ---------------**
 The update route is responsible for processing the data submitted from the edit form and applying those changes to the corresponding item in the database.
 2. Create update route. This route will handle PUT requests sent from the edit form on the Edit page.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-**⭐️--------------------------NOTES 📝-------------------------⭐️**
+### **⭐️-------------------------NOTES 📝-----------------------------⭐️**
 - The server.js file is typically the main entry point and configuration file for setting up an Express web server.
 
 - Use EJS (Embedded JavaScript) templates to create the HTML views for the landing page and other parts of the web application.
@@ -214,4 +200,3 @@ Organizing our templates into model-specific sub-folders is a good practice, esp
    2.  `params` is an object within the request object that holds ***route*** parameters. These are the parts of the URL that are defined with a colon(:) in the route path.
     3. Using fruitId: `req.params.fruitId` retrieves the value of fruitId from the URL. For example, if the URL is /fruits/12345, then req.params.fruitId will equal 12345.
     This ID is then used in the `Fruit.findById(req.params.fruitId)` call to search for the specific fruit in the database.
-
