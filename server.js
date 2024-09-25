@@ -1,5 +1,6 @@
 //**-----------------------Build and run Express-------------------------------**
 //**--------------Require the dotenv package, It should always be on the first line-----------------------------**
+//**----------------------9. Require method-override Middleware and Morgan ----------------------**
 
 const dotenv = require('dotenv') //require package
 dotenv.config();                 //loads the environment variables from .env file. You can also use: `require('dotenv').config() .
@@ -8,6 +9,8 @@ dotenv.config();                 //loads the environment variables from .env fil
 //We begin by loading Express
 const express = require('express');
 const mongoose = require('mongoose'); 
+const methodOverride = require("method-override");
+const morgan = require('morgan');
 
 const app = express();
 
@@ -25,10 +28,11 @@ const Fruit = require("./models/fruit.js");    //path
 
 
 //**----------------------5. Adding the Middleware ----------------------**
+//**----------------------10. Adding method-override Middleware and Morgan----------------------**
 
 app.use(express.urlencoded({ extended: false }));
-
-
+app.use(methodOverride('_method'));
+app.use(morgan('dev'));
 
 //**----------------------1. Build the route using EJS templates-------------------**
 //GET
@@ -76,13 +80,30 @@ app.get('/fruits', async (req,res) => {
     res.render("fruits/index.ejs", { fruits: allFruits }); 
 });
 
+//**---------------------11. Delete a Fruit route - DELETE ----------------------**
+app.delete("/fruits/:fruitId", async (req, res) => {
+  await Fruit.findByIdAndDelete(req.params.fruitId);
+  res.redirect("/fruits");
+});
 
-
-
-
-
-
-
+//**---------------------12. Define the edit route - EDIT ----------------------**
+//GET, localhost:3000/fruits/:fruitId/edit
+app.get("/fruits/:fruitId/edit", async (req, res) => {
+    const foundFruit = await Fruit.findById(req.params.fruitId);
+    //console.log(foundFruit);
+    res.render('fruits/edit.ejs', {fruit: foundFruit})
+    });
+ 
+//**---------------------12. Define the Update route - UPDATE ----------------------**
+app.put('/fruits/:fruitId', async (req, res) => {
+    if(req.body.isReadyToEat === 'on') {
+        req.body.isReadyToEat = true
+    } else {
+        req.body.isReadyToEat = false
+    }
+    await Fruit.findByIdAndUpdate(req.params.fruitId, req.body)
+    res.redirect(`/fruits/${req.params.fruitId}`)
+})
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');

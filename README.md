@@ -115,6 +115,7 @@ app.get("/fruits/:fruitId", (req, res) => {
 });
 ``` 
 Add it below the fruits/new route! We need to ensure that any route with an /:id is placed after /new in our express applications. 🟢server.js
+
 5. Build the READ functionality. Use Mongoose’s `.findById()` method for fetching a specific fruit by its _id. This method is perfect for retrieving a single document based on its unique identifier. ` const foundFruit = await Fruit.findById(req.params.fruitId);`. Update the route:
 ```Javascript
 app.get("/fruits/:fruitId", async (req, res) => {
@@ -130,9 +131,46 @@ Teste it! 🟣views/fruits/show.ejs
 10. Link show page back to Fruits index. Navigate back to the index page: `<a href="/fruits/">Back to Fruits</a>`. 🟣views/fruits/show.ejs
 11. Test it! Done ✅
 
+**⭐️-------------------DELETE A FRUIT - CRUD operation - DELETE!---------------⭐️**
+1. Introduce two essential middleware components: method-override and morgan.
+Stop our server and install their node packages: `npm i method-override morgan.
+2. Require them at the top of our server.js. 🟢server.js
+3. Add it along with the others middlewares: `app.use(methodOverride("_method"));` and `app.use(morgan("dev"));`. 🟢server.js
+4. Create the UI to delete a fruit. Adjust our fruits show page to include a button for deleting a fruit. 🟣views/fruits/show.ejs
+```Javascript
+<form action="/fruits/<%=fruit._id%>?_method=DELETE" method="POST">
+  <button type="submit">Delete <%= fruit.name %></button>
+</form>
+<a href="/fruits">Back to Fruits</a>
+```
+5. Define and test the route. Build and test the delete functionality in stages, first create a basic route that sends a confirmation message. Then, refactor it to add the actual delete functionality: `app.delete("/fruits/:fruitId", (req, res) => {`. 🟢server.js
+6. Create delete funcionality. Use the Mongoose method findByIdAndDelete() to find the fruit by its ID and delete it: `await Fruit.findByIdAndDelete(req.params.fruitId);`. 🟢server.js
+7. Redirects the user back to the index page /fruits, where the deleted fruit will no longer be listed. 🟢server.js
 
+**⭐️-------------------BUILD THE EDIT ROUTE - CRUD operation - EDIT!---------------⭐️**
+This is the only RESTful route that contains three segments /fruits/:fruitId/edit.
+1. Add a link on the show page and Update `show.ejs`. 🟣views/fruits/show.ejs
+```Javascript
+<a href="/fruits/<%= fruit._id %>/edit">Edit <%= fruit.name %></a>
+<a href="/fruits">Back to Fruits</a>
+``` 
+2. Define the route. 
+```Javascript
+app.get("/fruits/:fruitId/edit", async (req, res) => {
+  const foundFruit = await Fruit.findById(req.params.fruitId);
+  res.render("fruits/edit.ejs", {
+    fruit: foundFruit,
+  });
+});
+```
+3. Create the edit template.  Create a edit.ejs template inside the views/fruits: `touch views/fruits/edit.ejs
+`. 🟣views/fruits/show.ejs
+4. Edit fruit data. 🟣views/fruits/show.ejs
+5 . Prefill the form with the current data of the fruit being edited: `<input type="checkbox" name="isReadyToEat" <% if (fruit.isReadyToEat) { %>checked<% } %> >` 🟣views/fruits/show.ejs
 
-
+**⭐️-------------------UPDATE A FRUIT - CRUD operation - UPDATE!---------------⭐️**
+The update route is responsible for processing the data submitted from the edit form and applying those changes to the corresponding item in the database.
+2. Create update route. This route will handle PUT requests sent from the edit form on the Edit page.
 
 
 
@@ -166,6 +204,11 @@ Organizing our templates into model-specific sub-folders is a good practice, esp
 - When a user submits the form on the /fruits/new page, the browser sends a request to our server with the form data. To access this data in Express, we need to use middleware. Specifically, we’ll use express.urlencoded. 
 
 - Middleware **express.urlencoded**: This middleware parses incoming request bodies, extracting form data and converting it into a JavaScript object. It then attaches this object to the `req.body` property of the request, making the form data easily accessible within our route handlers.
+ 
+ - Middleware **method-override**: Tricks our express app into thinking that we’ve made PUT and DELETE requests from the browser. By doing this, we’re able to stick to our routing conventions, while at the same time, behind the scenes, using HTTP methods that the browser supports. 
+
+ - Middleware **morgan**: Serves as a logging tool for our HTTP requests, providing valuable insights into application behavior.
+
 
 -  1. `req` is the request object that contains information about the HTTP request.
    2.  `params` is an object within the request object that holds ***route*** parameters. These are the parts of the URL that are defined with a colon(:) in the route path.
