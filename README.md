@@ -1,29 +1,30 @@
 ### ** ----------------------------- **BUILD AND RUN EXPRESS** ---------------------------**
 1. Create a directory and cd into it, ` touch server.js + npm init + code . `
 2. Create a basic Express server, installing a express package `npm i express`. Packages added! ✅
-3. Built a Basic Structure of Express App (const express = require..., listen port... and etc.)
+3. Built a Basic Structure of Express App: `const express = require..., listen port... etc.`
 4. Run the Server : `nodemon`.
 
 ### ** ----------------------------- **BUILD A LANDING PAGE** -----------------------------**
 1. Create a landing page using EJS templates. We need to install it: `npm i ejs
 `.
-2. Build the route. (app.get('/', ... etc)). 🟢server.js
+2. Build the route: `app.get('/', ... etc`.                                                                🟢server.js
 3. Create a views directory and create a ejs file into it: `mkdir views + touch views/index.ejs`. Our landpage will be the `index.ejs` file.
-4. Add the boilerplate and content inside. 🟣views
-5. Modify the response in the server's route handler usind the `res.render()` method, instead of `res.send()`. So when the user visits the root `/`, they will see our homepage, change it to: `res.render('index.ejs');`. 🟢server.js
+4. Add the boilerplate and content inside.                                                                  🟣views
+5. Modify the response in the server's route handler usind the `res.render()` method, instead of `res.send()`. <br>
+So when the user visits the root `/`, they will see our homepage, change it to: `res.render('index.ejs');`.  🟢server.js
 
 ### ** ------------------- **USE MONGOOSE TO CONNECT TO MONGODB** -------------------**
 
 1. We need to install Mongoose and dotenv from NPM: `npm i mongoose dotenv`. Installed! ✅
-2. Create a .env file in your project’s root directory: `touch .env`. 
+2. Create a `.env` file in your project’s root directory: `touch .env`. 
 This file will be used to store any sensitive, secret information that the application needs to run, but that we don’t want to commit to GitHub.
-3. Create `touch .gitignore` file, and add it to it: `.env`, `node_modules/` and `package-lock.json` .  🔴.gitignore
-4. Edit our `.env` file, add a simple list of key-value pairs:  ⚪️.env
+3. Create `touch .gitignore` file, and add it to it: `.env`, `node_modules/` and `package-lock.json`.         🔴.gitignore
+4. Edit our `.env` file, add a simple list of key-value pairs:                                                ⚪️.env
 ```Javascript 
 SECRET_NUMBER=13
 PASSWORD=12345
 ```
-5. Add a connection string, paste your MongoDB Atlas connection string into your app's `.env` file assigning it to a MONGODB_URI environment variable. ⚪️.env
+5. Add a connection string, paste your MongoDB Atlas connection string into your app's `.env` file assigning it to a MONGODB_URI environment variable. ⚪️.env <br>
 `MONGODB_URI=mongodb+srv://<username>:<password>@sei.azure.mongodb.net/?retryWrites=true`
 6. Name your database collection. You can specify the preferred collection name by adding it between the / and the ? in the connection string: `/fruits?`. You MUST update this this to your preferred collection's name. ⚪️.env
 7. Connecting MongoDB in server.js. Require the `dotenv` package at the ***top*** of our server.js file to access them: 🟢server.js
@@ -44,12 +45,12 @@ mongoose.connection.on("connected", () => {
 
 ### ** ------------------ **BUILD THE FRUIT MODEL** ---------------------**
 
-1. Create a Models Directory and a Fruit file: `mkdir models + touch models/fruit.js`
+1. Create a Models Directory and a Fruit file: `mkdir models + touch models/fruit.js`.
 2. Create a Schema and Model for Our Fruits:
    1. Create the schema.
    2. Link the schema to a model.
    3. Export the model. `module.exports = Fruit;`
- You should name models and model files singularly. 🟠models/fruits.js
+ . You should name models and model files singularly. 🟠models/fruits.js
 3. Import the model into server.js, `const Fruit = require("./models/fruit.js");`  🟢server.js
 
 ### ** -------- **BUILD THE NEW FRUIT PAGE (DISPLAY A FORM)** -----------**
@@ -58,9 +59,9 @@ mongoose.connection.on("connected", () => {
   res.send("This route sends the user a form page!");
 });` 🟢server.js
 2. Create the new template: `mkdir views/fruits + touch views/fruits/new.ejs`.
-3. Add some basic content to our `new.ejs` template. 🟠models/fruits/new.ejs
-4. Update the route in server.js: Instead of res.send, let’s render the new.ejs. `res.render("fruits/new.ejs");` 🟢server.js 
-5. Create the form. This form will allow users to input data for creating a new fruit. 🟠models/fruits/new.ejs
+3. Add some basic content to our `new.ejs` template.    🟠models/fruits/new.ejs
+4. Update the route in server.js: Instead of res.send, let’s render the new.ejs. `res.render("fruits/new.ejs");`   🟢server.js 
+5. Create the form. This form will allow users to input data for creating a new fruit.    🟠models/fruits/new.ejs
 
 ### ** ---------- **CREATE A FRUIT - CRUD operation, CREATE!** -----------**
 1. Right after importing the Fruit model, create a route to handle form submissions for creating new fruits in our database. `app.use(express.urlencoded({ extended: false }));` 🟢server.js
@@ -68,7 +69,7 @@ mongoose.connection.on("connected", () => {
   console.log(req.body);
   res.redirect("/fruits/new");
 }); ` 🟢server.js
-3. Add the logic to the checkbox: `if (req.body.isReadyToEat === "on")` 🟢server.js
+3. Add the logic to the checkbox: `if (req.body.isReadyToEat === "on")`.   🟢server.js
 4. Verify that our data is safe by navigating to the MongoDB Atlas dashboard.
 
 ### ** ----- **BUILD THE FRUITS INDEX PAGE - CRUD funcionality, READ!** -----**
