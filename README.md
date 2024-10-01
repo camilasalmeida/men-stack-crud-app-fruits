@@ -13,7 +13,7 @@
 5. Modify the response in the server's route handler usind the `res.render()` method, instead of `res.send()`. <br>
 So when the user visits the root `/`, they will see our homepage, change it to: `res.render('index.ejs');`.  🟢server.js
 
-#### ** ------------------- **USE MONGOOSE TO CONNECT TO MONGODB** -------------------**
+#### ** -----------------------------**USE MONGOOSE TO CONNECT TO MONGODB** -------------------**
 
 1. We need to install Mongoose and dotenv from NPM: `npm i mongoose dotenv`. Installed! ✅
 2. Create a `.env` file in your project’s root directory: `touch .env`. 
@@ -43,7 +43,7 @@ mongoose.connection.on("connected", () => {
 ```
 10. Start the app: `nodemon`.
 
-#### ** ------------------------- **BUILD THE FRUIT MODEL** ----------------------------**
+#### ** ----------------------------- **BUILD THE FRUIT MODEL** ----------------------------**
 
 1. Create a Models Directory and a Fruit file: `mkdir models + touch models/fruit.js`.
 2. Create a Schema and Model for Our Fruits:
@@ -53,7 +53,7 @@ mongoose.connection.on("connected", () => {
  . You should name models and model files singularly. 🟠models/fruits.js
 3. Import the model into server.js, `const Fruit = require("./models/fruit.js");`  🟢server.js
 
-#### ** ------------------ **BUILD THE NEW FRUIT PAGE (DISPLAY A FORM)** -------------------**
+#### ** --------------------- **BUILD THE NEW FRUIT PAGE (DISPLAY A FORM)** -------------------**
 
 1. Define the route and test it: `app.get("/fruits/new", (req, res) => {
   res.send("This route sends the user a form page!");
@@ -63,7 +63,7 @@ mongoose.connection.on("connected", () => {
 4. Update the route in server.js: Instead of res.send, let’s render the new.ejs. `res.render("fruits/new.ejs");`   🟢server.js 
 5. Create the form. This form will allow users to input data for creating a new fruit.    🟠models/fruits/new.ejs
 
-#### ** -------------------- **CREATE A FRUIT - CRUD operation, CREATE!** -------------------**
+#### ** ---------------------- **CREATE A FRUIT - CRUD operation, CREATE!** -------------------**
 1. Right after importing the Fruit model, create a route to handle form submissions for creating new fruits in our database. `app.use(express.urlencoded({ extended: false }));` 🟢server.js
 2. Define and test the route. `app.post("/fruits", async (req, res) => {
   console.log(req.body);
@@ -72,7 +72,7 @@ mongoose.connection.on("connected", () => {
 3. Add the logic to the checkbox: `if (req.body.isReadyToEat === "on")`.   🟢server.js
 4. Verify that our data is safe by navigating to the MongoDB Atlas dashboard.
 
-#### ** -------------- **BUILD THE FRUITS INDEX PAGE - CRUD functionality, READ!** ------------**
+#### ** ------------------ **BUILD THE FRUITS INDEX PAGE - CRUD functionality, READ!** ------------**
 This route will retrieve and DISPLAY all the fruits currently stored in our database.<br>
 1. Define and test the route: <br>
  `app.get("/fruits", (req, res) => {
@@ -104,7 +104,7 @@ Do this by looping over the fruits array and dynamically generating an `<li>` fo
     2. `<a href="/fruits/new">Add New Fruit</a>`  🟣views/fruits/index.ejs
     3. `<a href="/fruits/">Back to Fruits</a> ` 🟣views/fruits/new.ejs
 
-#### ** ---------- **BUILD THE FRUITS SHOW PAGE - CRUD operation, READ!** -------------------**<br>
+#### ** ------------------ **BUILD THE FRUITS SHOW PAGE - CRUD operation, READ!** -----------------**<br>
 The show route is designed to display detailed information about a specific item, such as a specific `fruit` in our application. <br>
 In keeping with RESTful routing conventions, the url for this route will be: :fruitId.<br>
 
@@ -150,7 +150,7 @@ Use EJS control flow to dynamically display a message about the fruit’s readin
 `<a href="/fruits/">Back to Fruits</a>`. 🟣views/fruits/show.ejs<br>
 11. Test it! Done ✅
 
-#### ** ----------------- **DELETE A FRUIT - CRUD operation - DELETE!** ---------------**
+#### ** ---------------------- **DELETE A FRUIT - CRUD operation - DELETE!** ---------------**
 1. Introduce two essential middleware components: method-override and morgan.<br>
 Stop our server and install their node packages: `npm i method-override morgan.
 2. Require them at the top of our server.js. 🟢server.js
@@ -173,7 +173,7 @@ Build and test the delete functionality in stages, first create a basic route th
 Add it below the fruits/new route! We need to ensure that any route with an `/` is placed after /new in our express applications. 🟢server.js<br> 
 
 
-#### ** ------------ **BUILD THE EDIT ROUTE - CRUD operation - EDIT!** --------------------**
+#### ** -------------------- **BUILD THE EDIT ROUTE - CRUD operation - EDIT!** --------------------**
 This is the only RESTful route that contains three segments /fruits/:fruitId/edit.
 1. Add a link on the show page and Update `show.ejs`. 🟣views/fruits/show.ejs
 ```Javascript
@@ -195,11 +195,11 @@ app.get("/fruits/:fruitId/edit", async (req, res) => {
 5. Prefill the form with the current data of the fruit being edited: <br>
 `<input type="checkbox" name="isReadyToEat" <% if (fruit.isReadyToEat) { %>checked<% } %> >`. 🟣views/fruits/show.ejs
 
-#### ** ------------------ **UPDATE A FRUIT - CRUD operation - UPDATE!** --------------------**
+#### ** ------------------------- **UPDATE A FRUIT - CRUD operation - UPDATE!** --------------------**
 The update route is responsible for processing the data submitted from the edit form and applying those changes to the corresponding item in the database.
 1. Create update route. This route will handle PUT requests sent from the edit form on the Edit page.
 
-#### **⭐️----------------------------------- NOTES 📝 --------------------------------------⭐️**
+#### **⭐️--------------------------------------- NOTES 📝 ---------------------------------------------⭐️**
 - The server.js file is typically the main entry point and configuration file for setting up an Express web server.
 
 - Use EJS (Embedded JavaScript) templates to create the HTML views for the landing page and other parts of the web application.
